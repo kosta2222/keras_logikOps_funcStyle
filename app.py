@@ -39,12 +39,33 @@ def fit_nn(X,Y):
     # vm_proc_print(b_c, locals(), globals())
     return (nn, d0, d1, d2)
 
+
+def pred(X, dense0, dense1, dense2):
+    # model_new = Sequential()
+    # model_new.add(dense0)
+    # model_new.add(dense1)
+    # model_new.add(dense2)
+    inpTensor = Input((1,))
+
+    # create the layers and pass them the input tensor to get the output tensor:
+    hidden1Out = dense2
+    hidden1Out(inpTensor)
+    hidden2Out = dense1
+    finalOut = dense0
+
+    # define the model's start and end points
+    model_new=None
+    model_new = Model(inpTensor, finalOut)
+    p_matr = model_new.predict(np.array([X]))
+
+
 def main():
    or_X=[[1, 1], [1, 0], [0, 1], [0, 0]]
    or_Y=[[1], [1], [1], [0]]
    or_X_np=np.array(or_X)
    or_Y_np=np.array(or_Y)
-   fit_nn(or_X_np, or_Y_np)
+   nn, d0, d1, d2 = fit_nn(or_X_np, or_Y_np)
+   pred([1], d2, d1, d0 )
 
 if __name__ == '__main__':
     main()
